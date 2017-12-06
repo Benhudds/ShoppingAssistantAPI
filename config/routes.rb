@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :ipls
   end
   
+  resources :listowners
   post 'auth/login', to: 'authentication#authenticate'
   post 'signup', to:'users#create'
 end

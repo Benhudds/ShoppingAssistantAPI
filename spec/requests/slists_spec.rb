@@ -3,8 +3,18 @@ require 'rails_helper'
 RSpec.describe 'Slists API', type: :request do
   # add slists owner
   let(:user) { create(:user) }
-  let!(:slists) { create_list(:slist, 10, created_by: user.id) }
+  let!(:slists) { create_list(:slist, 10) }
   let(:slist_id) { slists.first.id }
+  let!(:listowner1) { create(:listowner, slist_id: 1, user_id: user.id) }
+  let!(:listowner2) { create(:listowner, slist_id: 2, user_id: user.id) }
+  let!(:listowner3) { create(:listowner, slist_id: 3, user_id: user.id) }
+  let!(:listowner4) { create(:listowner, slist_id: 4, user_id: user.id) }
+  let!(:listowner5) { create(:listowner, slist_id: 5, user_id: user.id) }
+  let!(:listowner6) { create(:listowner, slist_id: 6, user_id: user.id) }
+  let!(:listowner7) { create(:listowner, slist_id: 7, user_id: user.id) }
+  let!(:listowner8) { create(:listowner, slist_id: 8, user_id: user.id) }
+  let!(:listowner9) { create(:listowner, slist_id: 9, user_id: user.id) }
+  let!(:listowner10) { create(:listowner, slist_id: 10, user_id: user.id) }
   
   #authorize request
   let(:headers) { valid_headers }
@@ -47,7 +57,7 @@ RSpec.describe 'Slists API', type: :request do
   
   describe 'POST /slists' do
     let(:valid_attributes) do
-      { name: 'Weekly Shop', created_by: user.id.to_s }.to_json
+      { name: 'Weekly Shop' }.to_json
     end
     
     context 'when the request is valid' do

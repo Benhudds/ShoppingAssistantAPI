@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171124204902) do
+ActiveRecord::Schema.define(version: 20171205175243) do
 
   create_table "ipls", force: :cascade do |t|
     t.float "price"
@@ -36,6 +36,15 @@ ActiveRecord::Schema.define(version: 20171124204902) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "listowners", force: :cascade do |t|
+    t.integer "slist_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slist_id"], name: "index_listowners_on_slist_id"
+    t.index ["user_id"], name: "index_listowners_on_user_id"
+  end
+
   create_table "locations", force: :cascade do |t|
     t.string "name"
     t.float "lat"
@@ -48,7 +57,6 @@ ActiveRecord::Schema.define(version: 20171124204902) do
 
   create_table "slists", force: :cascade do |t|
     t.string "name"
-    t.string "created_by"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

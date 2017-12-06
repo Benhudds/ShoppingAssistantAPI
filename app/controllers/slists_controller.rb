@@ -10,6 +10,7 @@ class SlistsController < ApplicationController
   # POST /slists
   def create
     @slist = current_user.slists.create!(slist_params)
+    Listowner.create!(:slist_id => @slist.id, :user_id => current_user.id)
     json_response(@slist, :created)
   end
   
@@ -20,8 +21,13 @@ class SlistsController < ApplicationController
   
   # PUT /slists/:id
   def update
-    @slist.update(slist_params)
-    head :no_content
+    if (params[:email] != nil)
+      newUser = User.where(:email => params[:email]).first
+      Listowner.create!(:slist_id => @slist.id, :user_id => newUser.id)
+    else
+      @slist.update(slist_params)
+      head :no_content
+    end
   end
   
   # DELETE /slists/:id
@@ -33,7 +39,7 @@ class SlistsController < ApplicationController
   private
   
   def slist_params
-    params.permit(:name)
+    params.permit(:name, :email)
   end
   
   def set_slist
