@@ -39,6 +39,7 @@ group :development, :test do
   gem 'rspec-rails', '~>3.5'
   gem 'bcrypt', '~> 3.1.7'
   gem 'jwt'
+  gem 'mail', '~> 2.7'
 end
 
 group :development do

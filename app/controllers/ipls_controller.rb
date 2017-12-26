@@ -1,4 +1,5 @@
 class IplsController < ApplicationController
+  skip_before_action :authorize_request
   before_action :set_location
   before_action :set_location_ipl, only: [:show, :update, :destroy]
   

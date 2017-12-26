@@ -1,5 +1,6 @@
 require 'net/http'
 class LocationsController < ApplicationController
+  skip_before_action :authorize_request
   before_action :set_location, only: [:show, :update, :destroy]
   
   # GET /locations
