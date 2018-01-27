@@ -11,6 +11,10 @@ class AuthorizeApiRequest
     }
   end
 
+  def AuthorizeApiRequest.getuser
+    return User.find(decoded_auth_token[:user_id])
+  end
+
   private
 
   attr_reader :headers

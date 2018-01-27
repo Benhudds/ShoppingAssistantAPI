@@ -10,7 +10,6 @@ class SlistsController < ApplicationController
   # POST /slists
   def create
     @slist = current_user.slists.create!(slist_params)
-    #Listowner.create!(:slist_id => @slist.id, :user_id => current_user.id)
     json_response(@slist, :created)
   end
   
@@ -23,7 +22,9 @@ class SlistsController < ApplicationController
   def update
     if (params[:email] != nil)
       newUser = User.where(:email => params[:email]).first
-      Listowner.create!(:slist_id => @slist.id, :user_id => newUser.id)
+      if (Listowner.where(slist_id: :slist.id, user_id: newUser.id).blank?)
+        Listowner.create!(:slist_id => @slist.id, :user_id => newUser.id)
+      end
       json_response(newUser.id)
     else
       @slist.update(slist_params)

@@ -10,14 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171205175243) do
+ActiveRecord::Schema.define(version: 20180113223437) do
 
   create_table "ipls", force: :cascade do |t|
     t.float "price"
-    t.string "name"
+    t.string "item"
     t.integer "location_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "measure"
+    t.float "quantity"
     t.index ["location_id"], name: "index_ipls_on_location_id"
   end
 
@@ -27,6 +29,7 @@ ActiveRecord::Schema.define(version: 20171205175243) do
     t.integer "slist_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "measure"
     t.index ["slist_id"], name: "index_iqps_on_slist_id"
   end
 
@@ -45,6 +48,13 @@ ActiveRecord::Schema.define(version: 20171205175243) do
     t.index ["user_id"], name: "index_listowners_on_user_id"
   end
 
+  create_table "locationqueries", force: :cascade do |t|
+    t.float "lat"
+    t.float "lng"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "locations", force: :cascade do |t|
     t.string "name"
     t.float "lat"
@@ -57,6 +67,12 @@ ActiveRecord::Schema.define(version: 20171205175243) do
 
   create_table "slists", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tescoqueries", force: :cascade do |t|
+    t.string "query"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -64,7 +64,7 @@ RSpec.describe 'Ipls API' do
 
   # Test suite for POST /locations/:location_id/ipls
   describe 'POST /locations/:location_id/ipls' do
-    let(:valid_attributes) { { price: 3.25, name: "jam", location_id: location_id } }
+    let(:valid_attributes) { { price: 3.25, item: "jam", location_id: location_id, measure: "g", quantity:300 } }
 
     context 'when request attributes are valid' do
       before { post "/locations/#{location_id}/ipls", params: valid_attributes }
@@ -82,7 +82,7 @@ RSpec.describe 'Ipls API' do
       end
 
       it 'returns a failure message' do
-        expect(response.body).to match(/Validation failed: Price can't be blank, Name can't be blank/)
+        expect(response.body).to match(/Validation failed: Price can't be blank, Item can't be blank, Quantity can't be blank, Measure can't be blank/)
       end
     end
   end

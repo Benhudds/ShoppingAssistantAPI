@@ -43,6 +43,9 @@ Rails.application.configure do
     :authentication       => "plain",
     :enable_starttls_auto => true
   }
+  
+  ENV["REDISTOGO_URL"] = 'redis://redistogo:yourinfohere@something.redistogo.com:1234/'
+
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

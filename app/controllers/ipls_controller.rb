@@ -2,10 +2,32 @@ class IplsController < ApplicationController
   skip_before_action :authorize_request
   before_action :set_location
   before_action :set_location_ipl, only: [:show, :update, :destroy]
+
   
   # GET /locations/:location_id/ipls
   def index
-    json_response(@location.ipls)
+    if (@location.name.include? "Tesco" )
+      @TescoForeignKey = 1
+      ipls = Ipl.where(location_id: @TescoForeignKey)
+      print "\n"
+      print "\n"
+      print "returning tesco ipls"
+      print "\n"
+      print ipls.count 
+      print "\n"
+      print @location.ipls.count
+      print "\n"
+      print ipls
+      print "\n"
+      print "\n"
+      @location.ipls.each do |ipl|
+        ipls = ipls + Array.new(1).push(ipl)
+      end
+      
+      json_response(ipls)
+    else
+      json_response(@location.ipls)
+    end
   end
   
   # GET /locations/:location_id/ipls/:id
@@ -34,7 +56,7 @@ class IplsController < ApplicationController
   private
   
   def ipl_params
-    params.permit(:name, :price)
+    params.permit(:item, :price, :quantity, :measure)
   end
   
   def set_location

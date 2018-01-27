@@ -2,9 +2,10 @@ require 'rails_helper'
 
 RSpec.describe 'Iqps API' do
   let(:user) { create(:user) }
-  let!(:slist) { create(:slist, created_by: user.id) }
+  let!(:slist) { create(:slist) }
   let!(:iqps) { create_list(:iqp, 20, slist_id: slist.id) }
   let(:slist_id) { slist.id }
+  let!(:listowner) { create(:listowner, slist_id: slist.id, user_id: user.id) }
   let(:id) { iqps.first.id }
   let(:headers) { valid_headers }
   
@@ -64,7 +65,7 @@ RSpec.describe 'Iqps API' do
 
   # Test suite for POST /slists/:slist_id/iqps
   describe 'POST /slists/:slist_id/iqps' do
-    let(:valid_attributes) { { item: 'Eggs', quantity: 6 }.to_json }
+    let(:valid_attributes) { { item: 'Eggs', quantity: 6, measure: 'units' }.to_json }
 
     context 'when request attributes are valid' do
       before { post "/slists/#{slist_id}/iqps", params: valid_attributes, headers: headers }
