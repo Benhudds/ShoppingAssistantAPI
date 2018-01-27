@@ -13,5 +13,5 @@ Rails.application.routes.draw do
   post 'signup', to:'users#create'
   
   require "resque_web"
-  mount ResqueWeb::Engine => "/resque_web"
+  mount ResqueWeb::Engine => "resque"
 end
