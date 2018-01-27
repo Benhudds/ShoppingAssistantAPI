@@ -30,6 +30,8 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+gem 'pg', '~> 0.20'
+
 # Resque gem and redis requirement
 gem 'redis'
 gem 'resque', require: 'resque/server'

@@ -44,7 +44,7 @@ Rails.application.configure do
     :enable_starttls_auto => true
   }
   
-  ENV["REDISTOGO_URL"] = 'redis://redistogo:yourinfohere@something.redistogo.com:1234/'
+  ENV["REDISTOGO_URL"] = 'rails-tutorial-benhudds.c9users.io/redis'#redis://redistogo:yourinfohere@something.redistogo.com:1234/'
 
 
   # Print deprecation notices to the Rails logger.
