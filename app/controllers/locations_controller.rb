@@ -172,8 +172,8 @@ class LocationsController < ApplicationController
         end
       end
       
-      break if pageToken == nil
-      @url = @urlpre + params[:lat] + "," + params[:lng] + @urlsuf + @apikey + "&pageToken=" + pageToken
+      break if pageToken == nil or pageToken == ''
+      @url = @urlpre + params[:lat] + "," + params[:lng] + @urlsuf + @apikey + "&pagetoken=" + pageToken
     end
     
     return @locations

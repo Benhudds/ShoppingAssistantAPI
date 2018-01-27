@@ -66,7 +66,7 @@ class TescoapiController < ApplicationController
   
   # Method to delete the old ipls
   # Should be run once a day
-  def self.deleteOldResults
+  def self.perform
     oldIpls = Ipl.where(updated_at < 1.day.ago)
     
     oldIpls.each do |ipl|
@@ -82,6 +82,12 @@ class TescoapiController < ApplicationController
       
       if (dbIpl == nil)
         Ipl.create!({:location_id => @TescoForeignKey,:item => ipl['name'], :quantity => ipl['ContentsQuantity'], :measure => ipl['ContentsMeasureType'], :price => ipl['price']})
+        print "\n"
+        print "\n"
+        print "queing resque job"
+        print "\n"
+        print "\n"
+        Resque.enqueue_at(1.days.from_now, TescoapiController)
       else
         dbIpl.update(:quantity => ipl['ContentsQuantity'], :measure => ipl['ContentsMeasureType'], :price => ipl['price'])
       end

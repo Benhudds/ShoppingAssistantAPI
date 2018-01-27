@@ -11,4 +11,7 @@ Rails.application.routes.draw do
   resources :listowners
   post 'auth/login', to: 'authentication#authenticate'
   post 'signup', to:'users#create'
+  
+  require "resque_web"
+  mount ResqueWeb::Engine => "/resque_web"
 end
