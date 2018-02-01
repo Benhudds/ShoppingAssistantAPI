@@ -1,5 +1,5 @@
 class TescoapiController < ApplicationController
-  @TescoForeignKey = 1
+  @TescoForeignKey = 20
   
   # Method to add results to Tesco locations for the given query string
   def self.query(queryString)
@@ -66,11 +66,12 @@ class TescoapiController < ApplicationController
   
   # Method to delete the old ipls
   # Should be run once a day
-  def self.perform
-    oldIpls = Ipl.where(updated_at < 1.day.ago)
+  def self.deleteOld
+    oldIpls = Ipl.where(location_id: @TescoForeignKey).where(updated_at < 1.day.ago)
     
     oldIpls.each do |ipl|
       ipl.DELETE
+      ipl.save
     end
   end
   private
@@ -82,12 +83,6 @@ class TescoapiController < ApplicationController
       
       if (dbIpl == nil)
         Ipl.create!({:location_id => @TescoForeignKey,:item => ipl['name'], :quantity => ipl['ContentsQuantity'], :measure => ipl['ContentsMeasureType'], :price => ipl['price']})
-        print "\n"
-        print "\n"
-        print "queing resque job"
-        print "\n"
-        print "\n"
-        Resque.enqueue_at(1.days.from_now, TescoapiController)
       else
         dbIpl.update(:quantity => ipl['ContentsQuantity'], :measure => ipl['ContentsMeasureType'], :price => ipl['price'])
       end

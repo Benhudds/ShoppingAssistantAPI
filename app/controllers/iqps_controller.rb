@@ -6,6 +6,8 @@ class IqpsController < ApplicationController
   def index
     @slist.iqps.each do |iqp|
       TescoapiController.query(iqp.item)
+      IcelandwebController.query(iqp.item)
+      #AsdawebController.query(iqp.item)
     end
     
     json_response(@slist.iqps)
@@ -54,6 +56,7 @@ class IqpsController < ApplicationController
   
   def on_new_iqp(iqp)
     TescoapiController.query(iqp.item)
+    IcelandwebController.query(iqp.item)
     
     # Send the users (but not the current one) an email
     @users_to_email = getListOwners

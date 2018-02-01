@@ -7,7 +7,7 @@ class IplsController < ApplicationController
   # GET /locations/:location_id/ipls
   def index
     if (@location.name.include? "Tesco" )
-      @TescoForeignKey = 1
+      @TescoForeignKey = 20
       ipls = Ipl.where(location_id: @TescoForeignKey)
       print "\n"
       print "\n"
@@ -24,6 +24,13 @@ class IplsController < ApplicationController
         ipls = ipls + Array.new(1).push(ipl)
       end
       
+      json_response(ipls)
+    elsif (@location.name.include? "Iceland")
+      @IcelandForeignKey = 21
+      ipls = Ipl.where(location_id: @IcelandForeignKey)
+      @location.ipls.each do |ipl|
+        ipls = ipls.Array.new(1).push(ipl)
+      end
       json_response(ipls)
     else
       json_response(@location.ipls)
