@@ -9,7 +9,7 @@ class LocationsController < ApplicationController
     # If the user supplies a latitude and longitude value
     if (params[:lat] != nil && params[:lng] != nil)
       
-      Resque.enquque(DeleteOldIplsController)
+      Resque.enqueue(DeleteOldIplsController)
       print "\n"
       print "\n"
       print "\n"
