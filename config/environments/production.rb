@@ -77,7 +77,7 @@ Rails.application.configure do
     :enable_starttls_auto => true
   }
   
-  ENV["REDISTOGO_URL"] = 'redis://redistogo:yourinfohere@something.redistogo.com:1234/'
+  ENV["REDISTOGO_URL"] = 'redis://redistogo:b22ae7e77e3c90a728188397a8513b33@soldierfish.redistogo.com:10312/'
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
