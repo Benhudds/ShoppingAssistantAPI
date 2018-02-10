@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Iqps API' do
   let(:user) { create(:user) }
   let!(:slist) { create(:slist) }
-  let!(:iqps) { create_list(:iqp, 20, slist_id: slist.id) }
+  let!(:iqps) { create_list(:iqp, 1, slist_id: slist.id) }
   let(:slist_id) { slist.id }
   let!(:listowner) { create(:listowner, slist_id: slist.id, user_id: user.id) }
   let(:id) { iqps.first.id }
@@ -19,7 +19,7 @@ RSpec.describe 'Iqps API' do
       end
 
       it 'returns all slist iqps' do
-        expect(json.size).to eq(20)
+        expect(json.size).to eq(1)
       end
     end
 

@@ -10,16 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180131130531) do
+ActiveRecord::Schema.define(version: 20180209121154) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "asdaqueries", force: :cascade do |t|
-    t.string "query"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "icelandqueries", force: :cascade do |t|
     t.string "query"
@@ -35,6 +29,7 @@ ActiveRecord::Schema.define(version: 20180131130531) do
     t.datetime "updated_at", null: false
     t.string "measure"
     t.float "quantity"
+    t.string "imageurl"
     t.index ["location_id"], name: "index_ipls_on_location_id"
   end
 

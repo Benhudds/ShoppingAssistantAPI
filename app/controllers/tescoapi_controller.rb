@@ -1,5 +1,5 @@
 class TescoapiController < ApplicationController
-  @TescoForeignKey = 20
+  @TescoForeignKey = 1
   
   # Method to add results to Tesco locations for the given query string
   def self.query(queryString)
@@ -78,13 +78,19 @@ class TescoapiController < ApplicationController
 
   #  Method to add the json results to the tesco foregin key location
   def self.addResults(json)
+    print "\n"
+    print "\n"
+    print json
+    print "\n"
+    print "\n"
     json['results'].each do |ipl|
       dbIpl = Ipl.where(location_id: @TescoForeignKey, item: ipl['name']).first
       
       if (dbIpl == nil)
-        Ipl.create!({:location_id => @TescoForeignKey,:item => ipl['name'], :quantity => ipl['ContentsQuantity'], :measure => ipl['ContentsMeasureType'], :price => ipl['price']})
+        Ipl.create!({:location_id => @TescoForeignKey,:item => ipl['name'], :quantity => ipl['ContentsQuantity'], :measure => ipl['ContentsMeasureType'], :price => ipl['price'], :imageurl => ipl['image']})
+        
       else
-        dbIpl.update(:quantity => ipl['ContentsQuantity'], :measure => ipl['ContentsMeasureType'], :price => ipl['price'])
+        dbIpl.update(:quantity => ipl['ContentsQuantity'], :measure => ipl['ContentsMeasureType'], :price => ipl['price'], :imageurl => ipl['image'])
       end
     end
   end

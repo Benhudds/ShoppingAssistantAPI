@@ -3,11 +3,12 @@ class IplsController < ApplicationController
   before_action :set_location
   before_action :set_location_ipl, only: [:show, :update, :destroy]
 
+  @TescoForeignKey = 1
+  @IcelandForeignKey = 2
   
   # GET /locations/:location_id/ipls
   def index
     if (@location.name.include? "Tesco" )
-      @TescoForeignKey = 20
       ipls = Ipl.where(location_id: @TescoForeignKey)
       print "\n"
       print "\n"
@@ -26,7 +27,6 @@ class IplsController < ApplicationController
       
       json_response(ipls)
     elsif (@location.name.include? "Iceland")
-      @IcelandForeignKey = 21
       ipls = Ipl.where(location_id: @IcelandForeignKey)
       @location.ipls.each do |ipl|
         ipls = ipls.Array.new(1).push(ipl)
@@ -63,7 +63,7 @@ class IplsController < ApplicationController
   private
   
   def ipl_params
-    params.permit(:item, :price, :quantity, :measure)
+    params.permit(:item, :price, :quantity, :measure, :imageurl)
   end
   
   def set_location

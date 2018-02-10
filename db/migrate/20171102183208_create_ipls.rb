@@ -5,6 +5,7 @@ class CreateIpls < ActiveRecord::Migration[5.1]
       t.string :item
       t.float :quantity
       t.string :measure
+      t.string :imageurl
       t.references :location, foreign_key: true
 
       t.timestamps

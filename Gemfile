@@ -33,7 +33,8 @@ gem 'pg', '~> 0.20'
 # Resque gem and redis requirement
 gem 'redis'
 gem 'resque', require: 'resque/server'
-gem 'resque-web', git: 'https://github.com/resque/resque-web.git', branch: 'resque-2'
+gem 'resque-web', require: 'resque_web'
+#gem 'resque-web', git: 'https://github.com/resque/resque-web.git', branch: 'resque-2'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
