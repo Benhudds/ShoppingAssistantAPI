@@ -29,7 +29,7 @@ class IplsController < ApplicationController
     elsif (@location.name.include? "Iceland")
       ipls = Ipl.where(location_id: @IcelandForeignKey)
       @location.ipls.each do |ipl|
-        ipls = ipls.Array.new(1).push(ipl)
+        ipls = ipls + Array.new(1).push(ipl)
       end
       json_response(ipls)
     else
