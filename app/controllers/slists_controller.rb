@@ -3,6 +3,8 @@ class SlistsController < ApplicationController
   
   # GET /slists
   def index
+    
+    UserMailer.welcome_email(user).deliver_later
     @slists = current_user.slists
     json_response(@slists)
   end
