@@ -67,8 +67,8 @@ class TescoapiController < ApplicationController
   # Method to delete the old ipls
   # Should be run once a day
   def self.deleteOld
-    oldIpls = Ipl.where(location_id: @TescoForeignKey).where(updated_at < 1.day.ago)
-    
+    #oldIpls = Ipl.where(location_id: @TescoForeignKey).where(updated_at < 1.day.ago)
+    oldIpls = Ipl.all
     oldIpls.each do |ipl|
       ipl.DELETE
       ipl.save
