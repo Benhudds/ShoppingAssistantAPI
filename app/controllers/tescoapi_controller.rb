@@ -67,10 +67,26 @@ class TescoapiController < ApplicationController
   # Method to delete the old ipls
   # Should be run once a day
   def self.deleteOld
+    ActiveRecord::Base.clear_active_connections!
+    print "tesco destroy"
+    
     #oldIpls = Ipl.where(location_id: @TescoForeignKey).where(updated_at < 1.day.ago)
-    oldIpls = Ipl.all
+    oldIpls = Ipl.where(location_id: @TescoForeignKey)
+    
+    print "\n"
+    print "\n"
+    print "deleting "
+    print "\n"
+    print "count "
+    print oldIpls.count
+    print "\n"
+    print "\n"
+    
     oldIpls.each do |ipl|
-      ipl.DELETE
+      
+      print "deleteing " + ipl.item
+      print "\n"
+      ipl.destroy
       ipl.save
     end
   end

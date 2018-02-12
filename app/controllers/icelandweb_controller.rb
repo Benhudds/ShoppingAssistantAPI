@@ -44,7 +44,7 @@ class IcelandwebController < ApplicationController
   
   #Method to delete the old ipls
   def self.deleteOld
-    oldIpls = Ipl.where(location_id: @IcelandForeignKey).where(updated_at < 1.day.ago)
+    oldIpls = Ipl.where(location_id: @IcelandForeignKey).where("updated_at < ?", 1.day.ago)
     
     oldIpls.each do |ipl|
       ipl.DELETE

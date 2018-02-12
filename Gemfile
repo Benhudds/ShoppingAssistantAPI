@@ -31,9 +31,10 @@ gem 'jbuilder', '~> 2.5'
 gem 'pg', '~> 0.20'
 
 # Resque gem and redis requirement
-gem 'redis'
+gem 'redis', '<4'
 gem 'resque', require: 'resque/server'
 gem 'resque-web', require: 'resque_web'
+gem 'resque-scheduler'
 #gem 'resque-web', git: 'https://github.com/resque/resque-web.git', branch: 'resque-2'
 
 # Use Capistrano for deployment

@@ -2,7 +2,11 @@ class DeleteOldIplsController < ApplicationController
   @queue = :delete
   
   def self.perform()
-    IcelandwebController.deleteOld
+    print "\n"
+    print "\n"
+    print "resque"
+    print "\n"
+    print "\n"
     TescoapiController.deleteOld
   end
 end

@@ -1,0 +1,6 @@
+clear_leaderboards_moderator:
+  every:
+    - "1m"
+  class: "DeleteOldIplsController"
+  queue: delete
+  description: "This job will check delete every 30 seconds after 120 seconds after start"

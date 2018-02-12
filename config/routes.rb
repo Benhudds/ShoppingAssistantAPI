@@ -14,4 +14,5 @@ Rails.application.routes.draw do
   post 'signup', to:'users#create'
   
   mount ResqueWeb::Engine => "/resque_web"
+  root to: "locations#index"
 end
