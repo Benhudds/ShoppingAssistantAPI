@@ -47,7 +47,7 @@ class IcelandwebController < ApplicationController
     oldIpls = Ipl.where(location_id: @IcelandForeignKey).where("updated_at < ?", 1.day.ago)
     
     oldIpls.each do |ipl|
-      ipl.DELETE
+      ipl.destroy
       ipl.save
     end
   end

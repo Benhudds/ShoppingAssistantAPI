@@ -1,6 +1,6 @@
-clear_leaderboards_moderator:
+deleteOldIpls:
   every:
-    - "1m"
+    - "1d"
   class: "DeleteOldIplsController"
   queue: delete
-  description: "This job will check delete every 30 seconds after 120 seconds after start"
+  description: "This job will delete ipls more than a day old from the automatically gathered master locations"

@@ -67,29 +67,14 @@ class TescoapiController < ApplicationController
   # Method to delete the old ipls
   # Should be run once a day
   def self.deleteOld
-    ActiveRecord::Base.clear_active_connections!
-    print "tesco destroy"
-    
-    #oldIpls = Ipl.where(location_id: @TescoForeignKey).where(updated_at < 1.day.ago)
-    oldIpls = Ipl.where(location_id: @TescoForeignKey)
-    
-    print "\n"
-    print "\n"
-    print "deleting "
-    print "\n"
-    print "count "
-    print oldIpls.count
-    print "\n"
-    print "\n"
+    oldIpls = Ipl.where(location_id: @TescoForeignKey).where("updated_at < ?", 1.day.ago)
     
     oldIpls.each do |ipl|
-      
-      print "deleteing " + ipl.item
-      print "\n"
       ipl.destroy
       ipl.save
     end
   end
+  
   private
 
   #  Method to add the json results to the tesco foregin key location
