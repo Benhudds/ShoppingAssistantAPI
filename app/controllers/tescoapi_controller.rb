@@ -5,6 +5,12 @@ class TescoapiController < ApplicationController
     @@TescoForeignKey
   end
   
+  @@TescoNameString = "Tesco"
+  
+  def self.getName
+    @@TescoNameString
+  end
+  
   # Method to add results to Tesco locations for the given query string
   def self.query(queryString)
     queries = Tescoquery.where(:query => queryString)

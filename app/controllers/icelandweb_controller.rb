@@ -1,5 +1,15 @@
 class IcelandwebController < ApplicationController
-  @IcelandForeignKey = 2
+  @@IcelandForeignKey = 2
+  
+  def self.getForeignKey
+    @@IcelandForeignKey
+  end
+  
+  @@IcelandNameString = "Iceland"
+  
+  def self.getName
+    @@IcelandNameString
+  end
   
   # Method to add results to Asda locations for the given query string
   def self.query(queryString)
@@ -44,7 +54,7 @@ class IcelandwebController < ApplicationController
   
   #Method to delete the old ipls
   def self.deleteOld
-    oldIpls = Ipl.where(location_id: @IcelandForeignKey).where("updated_at < ?", 1.day.ago)
+    oldIpls = Ipl.where(location_id: @@IcelandForeignKey).where("updated_at < ?", 1.day.ago)
     
     oldIpls.each do |ipl|
       ipl.destroy
@@ -64,7 +74,7 @@ class IcelandwebController < ApplicationController
     
       json['results'].each do |ipl|
         
-        dbIpl = Ipl.where(location_id: @IcelandForeignKey, item: ipl['title']).first
+        dbIpl = Ipl.where(location_id: @@IcelandForeignKey, item: ipl['title']).first
   
         parts = ipl['unitPrice'].split(' ')
         priceStr = parts[0]
@@ -77,7 +87,7 @@ class IcelandwebController < ApplicationController
         end
         
         if (dbIpl == nil)
-          Ipl.create!({:location_id => @IcelandForeignKey,:item => ipl['title'], :quantity => parts[2], :measure => parts[3], :price => ipl['price'].to_f, :imageurl => baseimageurl + ipl['image']})
+          Ipl.create!({:location_id => @@IcelandForeignKey,:item => ipl['title'], :quantity => parts[2], :measure => parts[3], :price => ipl['price'].to_f, :imageurl => baseimageurl + ipl['image']})
         else
           dbIpl.update(:quantity => parts[2], :measure => parts[3], :price => ipl['price'].to_f, :imageurl => baseimageurl + ipl['image'])
         end
