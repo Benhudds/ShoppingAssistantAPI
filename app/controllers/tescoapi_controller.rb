@@ -1,5 +1,9 @@
 class TescoapiController < ApplicationController
-  @TescoForeignKey = 1
+  @@TescoForeignKey = 1
+  
+  def self.getForeignKey
+    @@TescoForeignKey
+  end
   
   # Method to add results to Tesco locations for the given query string
   def self.query(queryString)
@@ -67,7 +71,7 @@ class TescoapiController < ApplicationController
   # Method to delete the old ipls
   # Should be run once a day
   def self.deleteOld
-    oldIpls = Ipl.where(location_id: @TescoForeignKey).where("updated_at < ?", 1.day.ago)
+    oldIpls = Ipl.where(location_id: @@TescoForeignKey).where("updated_at < ?", 1.day.ago)
     
     oldIpls.each do |ipl|
       ipl.destroy
@@ -85,10 +89,10 @@ class TescoapiController < ApplicationController
     print "\n"
     print "\n"
     json['results'].each do |ipl|
-      dbIpl = Ipl.where(location_id: @TescoForeignKey, item: ipl['name']).first
+      dbIpl = Ipl.where(location_id: @@TescoForeignKey, item: ipl['name']).first
       
       if (dbIpl == nil)
-        Ipl.create!({:location_id => @TescoForeignKey,:item => ipl['name'], :quantity => ipl['ContentsQuantity'], :measure => ipl['ContentsMeasureType'], :price => ipl['price'], :imageurl => ipl['image']})
+        Ipl.create!({:location_id => @@TescoForeignKey,:item => ipl['name'], :quantity => ipl['ContentsQuantity'], :measure => ipl['ContentsMeasureType'], :price => ipl['price'], :imageurl => ipl['image']})
         
       else
         dbIpl.update(:quantity => ipl['ContentsQuantity'], :measure => ipl['ContentsMeasureType'], :price => ipl['price'], :imageurl => ipl['image'])

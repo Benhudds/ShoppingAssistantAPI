@@ -3,13 +3,12 @@ class IplsController < ApplicationController
   before_action :set_location
   before_action :set_location_ipl, only: [:show, :update, :destroy]
 
-  @TescoForeignKey = 1
   @IcelandForeignKey = 2
   
   # GET /locations/:location_id/ipls
   def index
     if (@location.name.include? "Tesco" )
-      ipls = Ipl.where(location_id: @TescoForeignKey)
+      ipls = Ipl.where(location_id: TescoapiController.getForeignKey)
       print "\n"
       print "\n"
       print "returning tesco ipls"
