@@ -20,9 +20,8 @@ class SlistsController < ApplicationController
   
   # PUT /slists/:id
   def update
-      @slist.update(slist_params)
-      head :no_content
-    end
+    @slist.update(slist_params)
+    head :no_content
   end
   
   # DELETE /slists/:id
