@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   post 'auth/login', to: 'authentication#authenticate'
   post 'signup', to:'users#create'
   
+  post 'share', to: 'listowners#create'
+  
   mount ResqueWeb::Engine => "/resque_web"
   root to: "locations#index"
 end
