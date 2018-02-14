@@ -20,13 +20,6 @@ class SlistsController < ApplicationController
   
   # PUT /slists/:id
   def update
-    if (params[:email] != nil)
-      newUser = User.where(:email => params[:email]).first
-      if (Listowner.where(slist_id: :slist.id, user_id: newUser.id).blank?)
-        Listowner.create!(:slist_id => @slist.id, :user_id => newUser.id)
-      end
-      json_response(newUser.id)
-    else
       @slist.update(slist_params)
       head :no_content
     end

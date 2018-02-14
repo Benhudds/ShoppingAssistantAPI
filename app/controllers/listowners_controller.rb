@@ -8,9 +8,16 @@ class ListownersController < ApplicationController
   end
   
   # POST /listowners
-  def creates
-    @listowner = Listowner.create!(listowner_params)
-    json_response(@listowner, :created)
+  def create
+    if (params[:email] != nil)
+    newUser = User.where(:email => params[:email]).first
+      if (Listowner.where(slist_id: :slist.id, user_id: newUser.id).blank?)
+        Listowner.create!(:slist_id => @slist.id, :user_id => newUser.id)
+      end
+      json_response(newUser.id, :created)
+    else
+      json_response(nil, :unprocessable_entity)
+    end
   end
   
   # GET /listowners/:id
@@ -33,7 +40,7 @@ class ListownersController < ApplicationController
   private
   
   def listowner_params
-    params.permit(:slist_id, :user_id)
+    params.permit(:slist_id, :user_id, :email)
   end
   
   def set_listowner
