@@ -1,6 +1,6 @@
 deleteOldIpls:
   every:
-    - "1d"
+    - "1m"
   class: "DeleteOldIplsController"
   queue: delete
   description: "This job will delete ipls more than a day old from the automatically gathered master locations"
