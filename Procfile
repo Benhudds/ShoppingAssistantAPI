@@ -1,2 +1,3 @@
 web: bundle exec rails server -p $PORT
-scheduler: bundle exec rake resque:scheduler
+$ PIDFILE=./resque-scheduler.pid BACKGROUND=yes \
+    rake resque:scheduler
