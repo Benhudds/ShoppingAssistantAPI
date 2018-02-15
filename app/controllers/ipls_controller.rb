@@ -5,7 +5,7 @@ class IplsController < ApplicationController
 
   # GET /locations/:location_id/ipls
   def index
-    if (@location.name.include? TescoapiController.getName && @location.id != TescoapiController.getForeignKey)
+    if ((@location.name.include? TescoapiController.getName) && @location.id != TescoapiController.getForeignKey)
       ipls = Ipl.where(location_id: TescoapiController.getForeignKey)
       print "\n"
       print "\n"
@@ -23,7 +23,7 @@ class IplsController < ApplicationController
       end
       
       json_response(ipls)
-    elsif (@location.name.include? IcelandwebController.getName && @location.id != IcelandwebController.getForeignKey)
+    elsif ((@location.name.include? IcelandwebController.getName) && @location.id != IcelandwebController.getForeignKey)
       ipls = Ipl.where(location_id: IcelandwebController.getForeignKey)
       @location.ipls.each do |ipl|
         ipls = ipls + Array.new(1).push(ipl)

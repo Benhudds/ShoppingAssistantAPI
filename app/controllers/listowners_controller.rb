@@ -22,7 +22,7 @@ class ListownersController < ApplicationController
         json_response(newUser.id, :created)
       end
     else
-      json_response(nil, :unprocessable_entity)
+      json_response("User not allowed to share this list with others", 422)
     end
   end
   
