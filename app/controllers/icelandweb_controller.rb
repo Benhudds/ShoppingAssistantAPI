@@ -27,15 +27,14 @@ class IcelandwebController < ApplicationController
     end
   end
   
-  # Method to perform a query on the ASDA web page
+  # Method to perform a query on the Iceland web page
   def self.doQuery(queryString)
     # Create the url
-    #urlpre = 'http://groceries.iceland.co.uk/search?w='
-    #urlmid = '&ref=groceries.iceland.co.uk%2F&'
     urlpre = 'http://iceland.resultspage.com/search?w='
     urlsuf = '&p=Q&cnt=40&ts=json-full&ua=Mozilla/5.0%20(Windows%20NT%2010.0;%20Win64;%20x64)%20AppleWebKit/537.36%20(KHTML,%20like%20Gecko)%20Chrome/63.0.3239.132%20Safari/537.36&cip=127.0.0.1&ref=groceries.iceland.co.uk%2F&isort=score&filter=storeid:0%20days_from_now:1&callback=searchResponse&_=1517415377803'
-    url = urlpre + queryString + urlsuf# + queryString
+    url = urlpre + queryString + urlsuf
     
+    # Get the data
     uri = URI(url)
     Net::HTTP::start(uri.host, uri.port,
       :use_ssl => uri.scheme == 'https') do |http|
@@ -46,9 +45,14 @@ class IcelandwebController < ApplicationController
 
     # Remove the start and end substrings
     content = @res.body[15..-2]
+    
+    # Parse into json
     json = JSON.parse(content)
+    
+    # Add results to tables
     addResults(json)
     
+    # Save query
     Icelandquery.create!(:query => queryString)
   end
   
@@ -64,18 +68,22 @@ class IcelandwebController < ApplicationController
   
   private
   
-    #  Method to add the json results to the iceland foregin key location
+  #  Method to add the json results to the iceland foregin key location
   def self.addResults(json)
+    # Base url for iceland images
     baseimageurl = 'http://groceries.iceland.co.uk'
     
+    # Return if results empty
     if (json['results'].blank?)
       return
     else
     
       json['results'].each do |ipl|
         
+        # Check for already existing ipl
         dbIpl = Ipl.where(location_id: @@IcelandForeignKey, item: ipl['title']).first
   
+        # Parse out price
         parts = ipl['unitPrice'].split(' ')
         priceStr = parts[0]
         
@@ -86,6 +94,7 @@ class IcelandwebController < ApplicationController
           price = price / 100
         end
         
+        # Create or update ipl
         if (dbIpl == nil)
           Ipl.create!({:location_id => @@IcelandForeignKey,:item => ipl['title'], :quantity => parts[2], :measure => parts[3], :price => ipl['price'].to_f, :imageurl => baseimageurl + ipl['image']})
         else

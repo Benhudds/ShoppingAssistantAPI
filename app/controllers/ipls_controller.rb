@@ -5,30 +5,28 @@ class IplsController < ApplicationController
 
   # GET /locations/:location_id/ipls
   def index
+    
+    # Check if this is a Tesco location
     if ((@location.name.include? TescoapiController.getName) && @location.id != TescoapiController.getForeignKey)
+      
       ipls = Ipl.where(location_id: TescoapiController.getForeignKey)
-      print "\n"
-      print "\n"
-      print "returning tesco ipls"
-      print "\n"
-      print ipls.count 
-      print "\n"
-      print @location.ipls.count
-      print "\n"
-      print ipls
-      print "\n"
-      print "\n"
       @location.ipls.each do |ipl|
         ipls = ipls + Array.new(1).push(ipl)
       end
       
       json_response(ipls)
+      
+      # Check if this is an Iceland location
     elsif ((@location.name.include? IcelandwebController.getName) && @location.id != IcelandwebController.getForeignKey)
+    
       ipls = Ipl.where(location_id: IcelandwebController.getForeignKey)
       @location.ipls.each do |ipl|
         ipls = ipls + Array.new(1).push(ipl)
       end
+      
       json_response(ipls)
+      
+      # Otherwise return ipls normally
     else
       json_response(@location.ipls)
     end

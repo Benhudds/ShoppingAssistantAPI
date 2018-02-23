@@ -17,28 +17,11 @@ class TescoapiController < ApplicationController
     
     # Check if there have been no queries
     if (queries.blank?)
-      print "\n"
-      print "\n"
-      print "Queries blank"
-      print "\n"
-      print "\n"
       
       doQuery(queryString)
       # Check if the previous query is more than one day old
     elsif (queries.first.updated_at < 1.day.ago)
-      print "\n"
-      print "\n"
-      print queries.first.updated_at < 1.day.ago
-      print "\n"
-      print "Query old"
-      print "\n"
-      print queries.first.updated_at.to_s
-      print "\n"
-      print 1.day.ago.to_s
-      print "\n"
-      print Time.now
-      print "\n"
-      print "\n"
+  
       queries.first.updated_at = Time.now
       queries.first.save
       
@@ -89,11 +72,7 @@ class TescoapiController < ApplicationController
 
   #  Method to add the json results to the tesco foregin key location
   def self.addResults(json)
-    print "\n"
-    print "\n"
-    print json
-    print "\n"
-    print "\n"
+
     json['results'].each do |ipl|
       dbIpl = Ipl.where(location_id: @@TescoForeignKey, item: ipl['name']).first
       

@@ -17,3 +17,4 @@ test:
 production:
   <<: *default
   database: my_database_prod
+  url: <%= ENV['POSTGRESQL_URL'] %>

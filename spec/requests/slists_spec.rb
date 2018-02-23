@@ -5,16 +5,16 @@ RSpec.describe 'Slists API', type: :request do
   let(:user) { create(:user) }
   let!(:slists) { create_list(:slist, 10) }
   let!(:slist_id) { slists.first.id }
-  #let!(:listowner1) { create(:listowner, slist_id: 1, user_id: user.id) }
-  #let!(:listowner2) { create(:listowner, slist_id: 2, user_id: user.id) }
-  #let!(:listowner3) { create(:listowner, slist_id: 3, user_id: user.id) }
-  #let!(:listowner4) { create(:listowner, slist_id: 4, user_id: user.id) }
-  #let!(:listowner5) { create(:listowner, slist_id: 5, user_id: user.id) }
-  #let!(:listowner6) { create(:listowner, slist_id: 6, user_id: user.id) }
-  #let!(:listowner7) { create(:listowner, slist_id: 7, user_id: user.id) }
-  #let!(:listowner8) { create(:listowner, slist_id: 8, user_id: user.id) }
-  #let!(:listowner9) { create(:listowner, slist_id: 9, user_id: user.id) }
-  #let!(:listowner10) { create(:listowner, slist_id: 10, user_id: user.id) }
+  let!(:listowner1) { create(:listowner, slist_id: slists[0].id, user_id: user.id) }
+  let!(:listowner2) { create(:listowner, slist_id: slists[1].id, user_id: user.id) }
+  let!(:listowner3) { create(:listowner, slist_id: slists[2].id, user_id: user.id) }
+  let!(:listowner4) { create(:listowner, slist_id: slists[3].id, user_id: user.id) }
+  let!(:listowner5) { create(:listowner, slist_id: slists[4].id, user_id: user.id) }
+  let!(:listowner6) { create(:listowner, slist_id: slists[5].id, user_id: user.id) }
+  let!(:listowner7) { create(:listowner, slist_id: slists[6].id, user_id: user.id) }
+  let!(:listowner8) { create(:listowner, slist_id: slists[7].id, user_id: user.id) }
+  let!(:listowner9) { create(:listowner, slist_id: slists[8].id, user_id: user.id) }
+  let!(:listowner10) { create(:listowner, slist_id: slists[9].id, user_id: user.id) }
   
   #authorize request
   let(:headers) { valid_headers }

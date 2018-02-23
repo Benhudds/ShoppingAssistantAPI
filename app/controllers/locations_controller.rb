@@ -9,21 +9,7 @@ class LocationsController < ApplicationController
     # If the user supplies a latitude and longitude value
     if (params[:lat] != nil && params[:lng] != nil)
       
-      print "\n"
-      print "\n"
-      print "\n"
-      print "Lat = " + params[:lat]
-      print "\n"
-      print "Lng = " + params[:lng]
-      print "\n"
-      print "\n"
-      print "\n"
-      
       locationQueries = Locationquery.where(lat: params[:lat].to_f.round(4), lng: params[:lng].to_f.round(4))
-      
-      print "matches " + locationQueries.count.to_s + " location queries"
-      print "\n"
-      print "\n"
       
       if locationQueries.blank?()
           # Arbitrary constant of 2.5km, this is about how far I am willing to travel to go grocery shopping
@@ -66,32 +52,14 @@ class LocationsController < ApplicationController
         @locations = queryLocation
         locationQueries.first().updated_at = Time.now
       else
-        
-      print "\n"
-      print "\n"
-      print "returning locations in 5km"
-      print "\n"
-      print "\n"
+
         getLocationsIn5km
       end
       
       
     else
-      print "\n"
-      print "\n"
-      print "returning all locations"
-      print "\n"
-      print "\n"
       @locations = Location.all
     end
-    
-    print "\n"
-    print "\n"
-    print @locations.count
-    print "\n"
-    print @locations
-    print "\n"
-    print "\n"
     
     json_response(@locations)
   end
@@ -172,8 +140,8 @@ class LocationsController < ApplicationController
         end
       end
       
-      break if pageToken == nil or pageToken == ''
       @url = @urlpre + params[:lat] + "," + params[:lng] + @urlsuf + @apikey + "&pagetoken=" + pageToken
+      break if pageToken == nil or pageToken == ''
     end
     
     return @locations

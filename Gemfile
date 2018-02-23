@@ -32,6 +32,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 
 gem 'pg', '~> 0.20'
+#gem 'minitest', '~> 5.1.3'
 
 # Resque gem and redis requirement
 gem 'redis', '<4'

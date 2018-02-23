@@ -4,7 +4,7 @@ RSpec.describe 'Iqps API' do
   let(:user) { create(:user) }
   let!(:slist) { create(:slist) }
   let!(:iqps) { create_list(:iqp, 1, slist_id: slist.id) }
-  let(:slist_id) { slist.id }
+  let!(:slist_id) { slist.id }
   let!(:listowner) { create(:listowner, slist_id: slist.id, user_id: user.id) }
   let(:id) { iqps.first.id }
   let(:headers) { valid_headers }
@@ -83,7 +83,7 @@ RSpec.describe 'Iqps API' do
       end
 
       it 'returns a failure message' do
-        expect(response.body).to match(/Validation failed: Item can't be blank, Quantity can't be blank/)
+        expect(response.body).to match(/Validation failed: Item can't be blank, Quantity can't be blank, Measure can't be blank/)
       end
     end
   end

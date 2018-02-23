@@ -18,6 +18,7 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-every 1.minute, at: "4:30am" do
+every 1.days, at: "4:30am" do
   runner "TescoapiController.deleteOld"
+  runner "IcelandwebController.deleteOld"
 end

@@ -5,9 +5,10 @@ class IqpsController < ApplicationController
   # GET /slists/:slist_id/iqps
   def index
     @slist.iqps.each do |iqp|
-      TescoapiController.query(iqp.item)
-      IcelandwebController.query(iqp.item)
-      #AsdawebController.query(iqp.item)
+      if Rails.env.production?
+        TescoapiController.query(iqp.item)
+        IcelandwebController.query(iqp.item)
+      end
     end
     
     json_response(@slist.iqps)
@@ -29,7 +30,9 @@ class IqpsController < ApplicationController
     @iqp = @slist.iqps.create!(iqp_params)
     @slist.updated_at = Time.now
     @slist.save
-    on_new_iqp(@iqp)
+    if Rails.env.production?
+      on_new_iqp(@iqp)
+    end
     json_response(@iqp, :created)
   end
   
