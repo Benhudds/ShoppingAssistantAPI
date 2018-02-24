@@ -35,5 +35,18 @@ RSpec.describe 'Listowners API', type: :request do
         expect(response).to have_http_status(422)
       end
     end
+    
+    context 'when the user does not own the slist' do
+      let(:valid_attributes) do
+        { email: user.email, slist_id: slist.id }.to_json
+      end
+        let(:headers) { { 'Authorization' => token_generator(user.id) } }
+      
+      before { post '/share', params: valid_attributes, headers: headers }
+      
+      it 'returns a status code 422' do
+        expect(response).to have_http_status(422)
+      end
+    end
   end
 end
