@@ -1,24 +1,6 @@
-# README
+# ShoppingAssistantAPI
+An individual third year project implementing a grocery comparison app whilst demonstrating a wide variety of skills.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is an API application for use the with ShoppingAssistant Client. The API allows users to register and login using the Authorization header and a given JWT token. Shopping lists are stored for each user and can be shared with other users. Emails are sent on registration, sharing, and update of shopping lists by other users. Also offers functionality to get nearby locations using the Google Places API and price information is gathered automatically from the Tesco API and Iceland website. 
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+The application is developed in Ruby on Rails and requires a PostgreSQL database service to be running locally. Migrations will create the database as required and seeding inputs the necessary master locations. Automated tests can be run for various web requests using the "bundle exec rspec" command. Supports background tasks with Resque, Resque Scheduler and Resque Web or simply with cron jobs. Recommend deploment on machines only accepting HTTPS connections as passwords are sent and received in plain text. Heroku/Dokku deployment is by far the easiest option however it should be noted that Resque + Resque Scheduler will not work on free dynos for Heroku due to dyno limit.
