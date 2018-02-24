@@ -12,18 +12,21 @@ class ListownersController < ApplicationController
     if (params[:email] != nil && params[:slist_id] != nil)
     
       # Check if submitting user is an owner
-      if (!Listowner.where(slist_id: :slist_id, user_id: current_user.id).blank?)
-        newUser = User.where(:email => params[:email]).first  
-        
+      if (!Listowner.where(slist_id: params[:slist_id], user_id: current_user.id).blank?)
+
+        newUser = User.where(:email => params[:email]).first
+
         # Check if new user is already an owner
         if (Listowner.where(slist_id: :slist_id, user_id: newUser.id).blank?)
-          Listowner.create!(:slist_id => :slist_id, :user_id => newUser.id)
+          Listowner.create!(:slist_id => params[:slist_id], :user_id => newUser.id)
         end
+
         json_response(newUser.id, :created)
+        return
       end
-    else
-      json_response("User not allowed to share this list with others", 422)
     end
+
+    json_response("User not allowed to share this list with others", 422)
   end
   
   # GET /listowners/:id
