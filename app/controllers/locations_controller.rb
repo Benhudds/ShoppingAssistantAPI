@@ -135,7 +135,7 @@ class LocationsController < ApplicationController
       
       # Create new locations for all those retrieved from the Google API and add them to a return list
       @parsed['results'].each do |location|
-        if (Location.where(id: location['id']).blank?)
+        if (Location.where(googleid: location['id']).blank?)
           @locations = @locations + Array.new(1).push(Location.create!({:name => location['name'], :lat => location['geometry']['location']['lat'], :lng => location['geometry']['location']['lng'], :vicinity =>location['vicinity'], :googleid => location['id']}))
         end
       end
