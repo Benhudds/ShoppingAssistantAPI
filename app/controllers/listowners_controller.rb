@@ -25,6 +25,7 @@ class ListownersController < ApplicationController
           end
           
           json_response(newUser.id, :created)
+          return
         end
 
         json_response("User not found", 422)
