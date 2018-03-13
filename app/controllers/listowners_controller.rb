@@ -15,6 +15,8 @@ class ListownersController < ApplicationController
       if (!Listowner.where(slist_id: params[:slist_id], user_id: current_user.id).blank?)
 
         newUser = User.where(:email => params[:email]).first
+        print "\n"
+        print newUser.email
 
         # Check if new user is already an owner
         if (Listowner.where(slist_id: :slist_id, user_id: newUser.id).blank?)
@@ -53,6 +55,6 @@ class ListownersController < ApplicationController
   end
   
   def set_listowner
-    @listowner = Listowner.find(params[:id])
+    @slist = Slist.find(params[:id])
   end
 end
