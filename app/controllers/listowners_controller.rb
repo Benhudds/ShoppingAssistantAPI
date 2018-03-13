@@ -24,9 +24,11 @@ class ListownersController < ApplicationController
           if (Listowner.where(slist_id: :slist_id, user_id: newUser.id).blank?)
             Listowner.create!(:slist_id => params[:slist_id], :user_id => newUser.id)
           end
+          
+          json_response(newUser.id, :created)
         end
 
-        json_response(newUser.id, :created)
+        json_response("User not found", 422)
         return
       end
     end
