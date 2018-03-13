@@ -52,11 +52,8 @@ class LocationsController < ApplicationController
         @locations = queryLocation
         locationQueries.first().updated_at = Time.now
       else
-
         getLocationsIn5km
       end
-      
-      
     else
       @locations = Location.all
     end
