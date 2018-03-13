@@ -14,13 +14,15 @@ class ListownersController < ApplicationController
       # Check if submitting user is an owner
       if (!Listowner.where(slist_id: params[:slist_id], user_id: current_user.id).blank?)
 
-        newUser = User.where(:email => params[:email]).first
-        print "\n"
-        print newUser.email
+        
+        
+        if (!User.where(:email => params[:email]).blank?)
+          newUser = User.where(:email => params[:email]).first  
 
-        # Check if new user is already an owner
-        if (Listowner.where(slist_id: :slist_id, user_id: newUser.id).blank?)
-          Listowner.create!(:slist_id => params[:slist_id], :user_id => newUser.id)
+          # Check if new user is already an owner
+          if (Listowner.where(slist_id: :slist_id, user_id: newUser.id).blank?)
+            Listowner.create!(:slist_id => params[:slist_id], :user_id => newUser.id)
+          end
         end
 
         json_response(newUser.id, :created)
