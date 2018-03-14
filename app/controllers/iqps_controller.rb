@@ -6,8 +6,10 @@ class IqpsController < ApplicationController
   def index
     @slist.iqps.each do |iqp|
       if Rails.env.production?
-        TescoapiController.query(iqp.item)
-        IcelandwebController.query(iqp.item)
+        Resque.enqueue(TescoapiController, iqp.item)
+        Resque.enqueue(IcelandwebController, iqp.item)
+        #TescoapiController.query(iqp.item)
+        #IcelandwebController.query(iqp.item)
       end
     end
     

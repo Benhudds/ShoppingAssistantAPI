@@ -12,7 +12,7 @@ class IcelandwebController < ApplicationController
   end
   
   # Method to add results to Asda locations for the given query string
-  def self.query(queryString)
+  def self.perform(queryString)
     queries = Icelandquery.where(:query => queryString)
     
     #Check if there have been no queries

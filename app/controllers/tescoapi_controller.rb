@@ -12,7 +12,7 @@ class TescoapiController < ApplicationController
   end
   
   # Method to add results to Tesco locations for the given query string
-  def self.query(queryString)
+  def self.perform(queryString)
     queries = Tescoquery.where(:query => queryString)
     
     # Check if there have been no queries
