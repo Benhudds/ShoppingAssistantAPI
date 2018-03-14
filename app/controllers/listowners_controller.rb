@@ -22,7 +22,8 @@ class ListownersController < ApplicationController
           # Check if new user is already an owner
           if (Listowner.where(slist_id: :slist_id, user_id: newUser.id).blank?)
             print "\n"
-            print Listowner.where(:slist_id => params[:slist_id], user_id: newUser.id).first
+            print Listowner.where(:slist_id => params[:slist_id], user_id: newUser.id).blank?
+            print "\n"
             Listowner.create!(:slist_id => params[:slist_id], :user_id => newUser.id)
           end
           
