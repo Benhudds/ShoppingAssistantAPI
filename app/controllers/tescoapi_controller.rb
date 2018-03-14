@@ -1,4 +1,5 @@
 class TescoapiController < ApplicationController
+  @queue = :delete
   @@TescoForeignKey = 1
   
   def self.getForeignKey
