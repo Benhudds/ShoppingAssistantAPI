@@ -8,8 +8,6 @@ class IqpsController < ApplicationController
       if Rails.env.production?
         Resque.enqueue(TescoapiController, iqp.item)
         Resque.enqueue(IcelandwebController, iqp.item)
-        #TescoapiController.query(iqp.item)
-        #IcelandwebController.query(iqp.item)
       end
     end
     
@@ -60,8 +58,8 @@ class IqpsController < ApplicationController
   end
   
   def on_new_iqp(iqp)
-    TescoapiController.query(iqp.item)
-    IcelandwebController.query(iqp.item)
+    Resque.enqueue(TescoapiController, iqp.item)
+    Resque.enqueue(IcelandwebController, iqp.item)
     
     # Send the users (but not the current one) an email
     @users_to_email = getListOwners
