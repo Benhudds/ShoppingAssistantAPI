@@ -1,5 +1,5 @@
 class IcelandwebController < ApplicationController
-  @queue = :delete
+  @queue = :work
   @@IcelandForeignKey = 2
   
   def self.getForeignKey
