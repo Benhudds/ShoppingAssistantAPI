@@ -21,7 +21,7 @@ class IqpsController < ApplicationController
   
   # POST /slists/:slist_id/iqps
   def create
-    iqps = Iqp.where(item: params[:item])
+    iqps = Iqp.where(slist_id: @slist.id).where(item: params[:item])
     if (!iqps.blank?)
       json_response("There is already an ipq for this item", 400)
       return
