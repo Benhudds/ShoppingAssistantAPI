@@ -26,7 +26,7 @@ class SlistsController < ApplicationController
   
   # DELETE /slists/:id
   def destroy
-    Listowner.where(:user_id => current_user.id).destroy_all
+    Listowner.where(:user_id => current_user.id).where(:slist_id => @slist.id).destroy_all
     
     if (Listowner.where(:slist_id => @slist.id).blank?)
       @slist.destroy
@@ -42,6 +42,5 @@ class SlistsController < ApplicationController
   
   def set_slist
     @slist = Slist.find(params[:id])
-    
   end
 end
