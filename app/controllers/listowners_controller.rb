@@ -22,6 +22,9 @@ class ListownersController < ApplicationController
           # Check if new user is already an owner
           if (Listowner.where(:slist_id => params[:slist_id], user_id: newUser.id).blank?)
             Listowner.create!(:slist_id => params[:slist_id], :user_id => newUser.id)
+            
+            # Send email
+            UserMailer.shared_slist_email(current_user, newUser, @slist).deliver_later
           end
           
           json_response(newUser.id, :created)

@@ -30,4 +30,11 @@ class UserMailer < ApplicationMailer
     @oldQuantity = oldQuantity
     mail(to: @user.email, subject: 'Updated ' + @slist.name)
   end
+  
+  def shared_slist_email(current_user, user, slist)
+    @current_user = current_user
+    @user = user
+    @slist = slist
+    mail(to: @user.email, subject: @current_user.name + 'has shared their shopping list ' + @slist.name + ' with you.')
+  end
 end
