@@ -1,5 +1,5 @@
 class ListownersController < ApplicationController
-  before_action :set_listowner, only: [:show, :update, :destroy]
+  before_action :set_slist, only: [:show, :update, :destroy, :create]
   
   # GET /listowners
   def index
@@ -62,7 +62,7 @@ class ListownersController < ApplicationController
     params.permit(:slist_id, :user_id, :email)
   end
   
-  def set_listowner
-    @slist = Slist.find(params[:id])
+  def set_slist
+    @slist = Slist.find(params[:slist_id])
   end
 end
