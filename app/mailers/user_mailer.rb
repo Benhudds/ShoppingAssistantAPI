@@ -35,6 +35,6 @@ class UserMailer < ApplicationMailer
     @current_user = current_user
     @user = user
     @slist = slist
-    mail(to: @user.email, subject: @current_user.name + 'has shared their shopping list ' + @slist.name + ' with you.')
+    mail(to: @user.email, subject: @current_user.name + ' has shared their shopping list ' + @slist.name + ' with you.')
   end
 end
