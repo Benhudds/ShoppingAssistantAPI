@@ -39,8 +39,12 @@ class IqpsController < ApplicationController
   # PUT /slists/:slist_id/iqps/:id
   def update
     @oldQuantity = @iqp.quantity
-    @iqp.update(iqp_params)
-    on_modified_iqp(@iqp, @oldQuantity)
+    if @iqp.quantity != params['quantity']
+      @iqp.update(iqp_params)
+      if Rails.env.production?
+        on_modified_iqp(@iqp, @oldQuantity)
+      end
+    end
     head :no_content
   end
   
