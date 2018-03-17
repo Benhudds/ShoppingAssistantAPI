@@ -6,7 +6,7 @@
   <body>
     <h3>Your shopping list <%= @slist.name%> has been updated</h3>
     <p>
-      <%= @iqp.item %> x <%= @iqp.quantity %> has been removed from your shopping list by <%= @user.name %>.<br>
+      <%= @iqp.item %> x <%= @iqp.quantity %> <%= @iqp.measure %> has been removed from your shopping list by <%= @user.name %>.<br>
     </p>
   </body>
 </html>
