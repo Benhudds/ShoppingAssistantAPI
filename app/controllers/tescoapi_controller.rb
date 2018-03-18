@@ -67,6 +67,14 @@ class TescoapiController < ApplicationController
       ipl.destroy
       ipl.save
     end
+    
+    oldQueries = Tescoquery.where("created_at < ?", 1.day.ago)
+    
+    oldQueries.each do |query|
+      query.destroy
+      query.save
+    end
+  
   end
   
   private

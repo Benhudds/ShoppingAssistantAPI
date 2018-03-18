@@ -65,6 +65,13 @@ class IcelandwebController < ApplicationController
       ipl.destroy
       ipl.save
     end
+    
+    oldQueries = Icelandquery.where("created_at < ?", 1.day.ago)
+    
+    oldQueries.each do |query|
+      query.destroy
+      query.save
+    end
   end
   
   private
