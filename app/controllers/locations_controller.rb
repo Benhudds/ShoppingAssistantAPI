@@ -132,6 +132,8 @@ class LocationsController < ApplicationController
       print "\n"
       print @url
       print "\n"
+      print @response.code
+      print "\n"
       print pageToken
       print "\n"
       print @parsed['results']
