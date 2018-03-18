@@ -12,7 +12,7 @@ class LocationsController < ApplicationController
       locationQueries = Locationquery.where(lat: params[:lat].to_f.round(4), lng: params[:lng].to_f.round(4))
       
       if locationQueries.blank?()
-          # Arbitrary constant of 2.5km, this is about how far I am willing to travel to go grocery shopping
+          # Arbitrary constant of 2.5km, this is about half as far I am willing to travel to go grocery shopping
           # was used to calculate these values. See logbook for more details
           latdivisor = 44.2296
           lngdivisor = 44.528
@@ -129,6 +129,10 @@ class LocationsController < ApplicationController
       @parsed = JSON.parse(@response)
       
       pageToken = @parsed['next_page_token']
+      print "\n"
+      print @url
+      print "\n"
+      print pageToken
       
       # Create new locations for all those retrieved from the Google API and add them to a return list
       @parsed['results'].each do |location|
