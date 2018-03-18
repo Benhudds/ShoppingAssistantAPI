@@ -133,6 +133,7 @@ class LocationsController < ApplicationController
       print @url
       print "\n"
       print pageToken
+      print "\n"
       
       # Create new locations for all those retrieved from the Google API and add them to a return list
       @parsed['results'].each do |location|
@@ -147,6 +148,12 @@ class LocationsController < ApplicationController
       
       @url = @urlpre + params[:lat] + "," + params[:lng] + @urlsuf + @apikey + "&pagetoken=" + pageToken
       break if pageToken == nil or pageToken == ''
+      
+      print "\n"
+      print "break"
+      print "\n"
+      print @url
+      print "\n"
     end
     
     return @locations
