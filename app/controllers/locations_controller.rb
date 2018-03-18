@@ -132,7 +132,7 @@ class LocationsController < ApplicationController
       print "\n"
       print @url
       print "\n"
-      print @response.code
+      print @response
       print "\n"
       print pageToken
       print "\n"
