@@ -143,6 +143,9 @@ class LocationsController < ApplicationController
       end
       
       if pageToken == nil
+        print "\n"
+        print "break pagetoken nil"
+        print "\n"
         break
       end
       
