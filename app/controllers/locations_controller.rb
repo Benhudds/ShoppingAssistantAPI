@@ -132,6 +132,10 @@ class LocationsController < ApplicationController
       print "\n"
       print @url
       print "\n"
+      print "uri"
+      print "\n"
+      print @uri
+      print "\n"
       print @response
       print "\n"
       print pageToken
