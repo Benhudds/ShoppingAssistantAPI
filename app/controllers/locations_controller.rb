@@ -176,7 +176,7 @@ class LocationsController < ApplicationController
     
     if pageToken != nil && pageToken != ""
       @url = @urlpre + params[:lat] + "," + params[:lng] + @urlsuf + @apikey + "&pagetoken=" + pageToken
-      Resque.enqueue(LocationsController, params[:lat], params[:lng], @url)
+      Resque.enqueue(LocationsController, params[:lat], params[:lng], pageToken)
     end
     
     print "\n"
