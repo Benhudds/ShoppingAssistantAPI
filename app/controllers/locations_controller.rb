@@ -94,7 +94,7 @@ class LocationsController < ApplicationController
     @response = Net::HTTP.get(@uri)
     @parsed = JSON.parse(@response)
     
-    pageToken = @parsed['next_page_token']
+    newPageToken = @parsed['next_page_token']
     
     # Create new locations for all those retrieved from the Google API and add them to a return list
     @parsed['results'].each do |location|
@@ -103,9 +103,8 @@ class LocationsController < ApplicationController
       end
     end
     
-    if pageToken != nil && pageToken != ''
-      newUrl = @urlpre + lat + "," + lng + @urlsuf + @apikey + "&pagetoken=" + pageToken
-      Resque.enqueue(LocationsController, lat, lng,  newUrl)
+    if newPageToken != nil && newPageToken != ''
+      Resque.enqueue(LocationsController, lat, lng, newPageToken)
     end
   end
   
