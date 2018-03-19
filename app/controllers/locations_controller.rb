@@ -52,6 +52,7 @@ class LocationsController < ApplicationController
         # Otherwise do a new query if the old one needs refreshing
         @locations = queryLocation
         locationQueries.first().updated_at = Time.now
+        locationQueries.first().save
       else
         getLocationsIn5km
       end
@@ -103,6 +104,9 @@ class LocationsController < ApplicationController
     @parsed['results'].each do |location|
       if (Location.where(googleid: location['id']).blank?)
         Location.create!({:name => location['name'], :lat => location['geometry']['location']['lat'], :lng => location['geometry']['location']['lng'], :vicinity =>location['vicinity'], :googleid => location['id']})
+      else
+        location = Location.first(googleid: location['id'])
+        location.update({:name => location['name'], :lat => location['geometry']['location']['lat'], :lng => location['geometry']['location']['lng'], :vicinity =>location['vicinity']})
       end
     end
     
@@ -161,6 +165,8 @@ class LocationsController < ApplicationController
       if (Location.where(googleid: location['id']).blank?)
         @locations = @locations + Array.new(0).push(Location.create!({:name => location['name'], :lat => location['geometry']['location']['lat'], :lng => location['geometry']['location']['lng'], :vicinity =>location['vicinity'], :googleid => location['id']}))
       else 
+        location = Location.first(googleid: location['id'])
+        location.update({:name => location['name'], :lat => location['geometry']['location']['lat'], :lng => location['geometry']['location']['lng'], :vicinity =>location['vicinity']})
         @locations = @locations + Array.new(0).push(Location.where(googleid: location['id']).first)
       end
     end
