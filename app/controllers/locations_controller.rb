@@ -85,8 +85,11 @@ class LocationsController < ApplicationController
     head :no_content
   end
   
-  def self.perform(url)
+  def self.perform(lat, lng, pageToken)
     # Get the Google API JSON response
+    
+    url = @urlpre + lat + "," + lng + @urlsuf + @apikey + "&pagetoken=" + pageToken
+      
     @uri = URI(url)
     @response = Net::HTTP.get(@uri)
     @parsed = JSON.parse(@response)
@@ -101,7 +104,7 @@ class LocationsController < ApplicationController
     end
     
     if pageToken != nil && pageToken != ''
-      newUrl = @urlpre + params[:lat] + "," + params[:lng] + @urlsuf + @apikey + "&pagetoken=" + pageToken
+      newUrl = @urlpre + lat + "," + lng + @urlsuf + @apikey + "&pagetoken=" + pageToken
       Resque.enqueue(LocationsController, newUrl)
     end
   end
@@ -167,6 +170,8 @@ class LocationsController < ApplicationController
     @parsed['results'].each do |location|
       if (Location.where(googleid: location['id']).blank?)
         @locations = @locations + Array.new(1).push(Location.create!({:name => location['name'], :lat => location['geometry']['location']['lat'], :lng => location['geometry']['location']['lng'], :vicinity =>location['vicinity'], :googleid => location['id']}))
+      else 
+        @locations = @locations + Array.new(1).push(Location.first(googleid: location['id]']))
       end
     end
     
