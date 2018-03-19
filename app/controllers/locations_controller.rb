@@ -105,7 +105,7 @@ class LocationsController < ApplicationController
     
     if pageToken != nil && pageToken != ''
       newUrl = @urlpre + lat + "," + lng + @urlsuf + @apikey + "&pagetoken=" + pageToken
-      Resque.enqueue(LocationsController, newUrl)
+      Resque.enqueue(LocationsController, lat, lng,  newUrl)
     end
   end
   
@@ -177,7 +177,7 @@ class LocationsController < ApplicationController
     
     if pageToken != nil && pageToken != ""
       @url = @urlpre + params[:lat] + "," + params[:lng] + @urlsuf + @apikey + "&pagetoken=" + pageToken
-      Resque.enqueue(LocationsController, @url)
+      Resque.enqueue(LocationsController, params[:lat], params[:lng], @url)
     end
     
     print "\n"
