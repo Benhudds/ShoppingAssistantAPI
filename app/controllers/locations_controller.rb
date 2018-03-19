@@ -171,7 +171,7 @@ class LocationsController < ApplicationController
       if (Location.where(googleid: location['id']).blank?)
         @locations = @locations + Array.new(1).push(Location.create!({:name => location['name'], :lat => location['geometry']['location']['lat'], :lng => location['geometry']['location']['lng'], :vicinity =>location['vicinity'], :googleid => location['id']}))
       else 
-        @locations = @locations + Array.new(1).push(Location.first(googleid: location['id']))
+        @locations = @locations + Array.new(1).push(Location.where(googleid: location['id']).first)
       end
     end
     
