@@ -87,6 +87,9 @@ class LocationsController < ApplicationController
   
   def self.perform(lat, lng, pageToken)
     # Get the Google API JSON response
+    @urlpre = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='
+    @urlsuf = '&radius=5000&type=grocery_or_supermarket&key='
+    @apikey = 'AIzaSyBZNkl0tUTymbtbp7zwL0sv-9zBw0ba5-s'
     
     url = @urlpre + lat + "," + lng + @urlsuf + @apikey + "&pagetoken=" + pageToken
       
