@@ -84,6 +84,27 @@ class LocationsController < ApplicationController
     head :no_content
   end
   
+  def self.perform(url)
+    # Get the Google API JSON response
+    @uri = URI(url)
+    @response = Net::HTTP.get(@uri)
+    @parsed = JSON.parse(@response)
+    
+    pageToken = @parsed['next_page_token']
+    
+    # Create new locations for all those retrieved from the Google API and add them to a return list
+    @parsed['results'].each do |location|
+      if (Location.where(googleid: location['id']).blank?)
+        Location.create!({:name => location['name'], :lat => location['geometry']['location']['lat'], :lng => location['geometry']['location']['lng'], :vicinity =>location['vicinity'], :googleid => location['id']})
+      end
+    end
+    
+    if pageToken != nil && pageToken != ''
+      newUrl = @urlpre + params[:lat] + "," + params[:lng] + @urlsuf + @apikey + "&pagetoken=" + pageToken
+      Resque.enqueue(LocationsController, newUrl)
+    end
+  end
+  
   private
   
   def getLocationsIn5km
@@ -122,52 +143,44 @@ class LocationsController < ApplicationController
     
     @locations = Array.new
     
-    loop do
-      # Get the Google API JSON response
-      @uri = URI(@url)
-      @response = Net::HTTP.get(@uri)
-      @parsed = JSON.parse(@response)
-      
-      pageToken = @parsed['next_page_token']
-      print "\n"
-      print @url
-      print "\n"
-      print "uri"
-      print "\n"
-      print @uri
-      print "\n"
-      print @response
-      print "\n"
-      print pageToken
-      print "\n"
-      print @parsed['results']
-      
-      # Create new locations for all those retrieved from the Google API and add them to a return list
-      @parsed['results'].each do |location|
-        if (Location.where(googleid: location['id']).blank?)
-          @locations = @locations + Array.new(1).push(Location.create!({:name => location['name'], :lat => location['geometry']['location']['lat'], :lng => location['geometry']['location']['lng'], :vicinity =>location['vicinity'], :googleid => location['id']}))
-        end
+    # Get the Google API JSON response
+    @uri = URI(@url)
+    @response = Net::HTTP.get(@uri)
+    @parsed = JSON.parse(@response)
+    
+    pageToken = @parsed['next_page_token']
+    print "\n"
+    print @url
+    print "\n"
+    print "uri"
+    print "\n"
+    print @uri
+    print "\n"
+    print @response
+    print "\n"
+    print pageToken
+    print "\n"
+    print @parsed['results']
+    
+    # Create new locations for all those retrieved from the Google API and add them to a return list
+    @parsed['results'].each do |location|
+      if (Location.where(googleid: location['id']).blank?)
+        @locations = @locations + Array.new(1).push(Location.create!({:name => location['name'], :lat => location['geometry']['location']['lat'], :lng => location['geometry']['location']['lng'], :vicinity =>location['vicinity'], :googleid => location['id']}))
       end
-      
-      if pageToken == nil
-        print "\n"
-        print "break pagetoken nil"
-        print "\n"
-        break
-      end
-      
-      @url = @urlpre + params[:lat] + "," + params[:lng] + @urlsuf + @apikey + "&pagetoken=" + pageToken
-      break if pageToken == nil or pageToken == ''
-
     end
-  
-      print "\n"
-      print "break"
-      print "\n"
-      print @url
-      print "\n"
-      print @locations.count
-      print "\n"
+    
+    if pageToken != nil && pageToken != ""
+      @url = @urlpre + params[:lat] + "," + params[:lng] + @urlsuf + @apikey + "&pagetoken=" + pageToken
+      Resque.enqueue(LocationsController, @url)
+    end
+    
+    print "\n"
+    print "break"
+    print "\n"
+    print @url
+    print "\n"
+    print @locations.count
+    print "\n"
       
     return @locations
   end
