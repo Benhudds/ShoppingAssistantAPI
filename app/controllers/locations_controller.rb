@@ -101,9 +101,8 @@ class LocationsController < ApplicationController
     
     # Create new locations for all those retrieved from the Google API and add them to a return list
     @parsed['results'].each do |location|
-      if (Location.where(googleid: location['id']).blank?)
+    if (Location.where(googleid: location['id']).blank?)
         Location.create!({:name => location['name'], :lat => location['geometry']['location']['lat'], :lng => location['geometry']['location']['lng'], :vicinity =>location['vicinity'], :googleid => location['id']})
-      end
     end
     
     if newPageToken != nil && newPageToken != ''
@@ -155,18 +154,6 @@ class LocationsController < ApplicationController
     @parsed = JSON.parse(@response)
     
     pageToken = @parsed['next_page_token']
-    print "\n"
-    print @url
-    print "\n"
-    print "uri"
-    print "\n"
-    print @uri
-    print "\n"
-    print @response
-    print "\n"
-    print pageToken
-    print "\n"
-    print @parsed['results']
     
     # Create new locations for all those retrieved from the Google API and add them to a return list
     @parsed['results'].each do |location|
@@ -181,15 +168,6 @@ class LocationsController < ApplicationController
       @url = @urlpre + params[:lat] + "," + params[:lng] + @urlsuf + @apikey + "&pagetoken=" + pageToken
       Resque.enqueue(LocationsController, params[:lat], params[:lng], pageToken)
     end
-    
-    print "\n"
-    print "break"
-    print "\n"
-    print @url
-    print "\n"
-    print @locations.count
-    print "\n"
-      
     return @locations
   end
   
